@@ -1,0 +1,22 @@
+export default {
+  COLOR_SCHEME: [
+    "#5899da",
+    "#a090e5",
+    "#e77fd1",
+    "#ff729e",
+    "#ff815d",
+    "#ffa600"
+  ],
+  LINE_STROKE_WIDTH: 2,
+  POINT_LABEL_OFFSET_X: 20,
+  POINT_LABEL_OFFSET_Y: -3,
+  POINT_RADIUS: 5,
+  STROKE_COLOR: "#fff",
+  Y_AXIS_LABEL_OFFSET_PX_Y: -5,
+  Y_AXIS_LABEL_OFFSET_PX_X: -15,
+  X_AXIS_LABEL_OFFSET_PX_Y: 20,
+  X_AXIS_LABEL_OFFSET_PX_X: -5,
+  Y_SCALE_MAX_FACTOR: 1.25,
+  LEGEND_OFFSET_X: 15,
+  LEGEND_STEP_Y: 15
+};

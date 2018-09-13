@@ -1,0 +1,48 @@
+@blue: #2b64cc;
+.root {
+  background-color: #fff;
+  color: #000;
+}
+
+.clickable {
+  margin: 0.2em;
+  padding: 0.4em;
+  background-color: #fff;
+  color: @blue;
+  border-radius: 0.2em;
+}
+
+.clickable:hover {
+  opacity: 0.6;
+  cursor: pointer;
+}
+
+.row {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  justify-content: space-between;
+}
+
+.label {
+  display: flex;
+  align-items: center;
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+}
+
+.input {
+  text-align: center;
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+  display: flex;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid @blue;
+  padding: 0.3em;
+  padding-bottom: 0;
+  max-width: 3em;
+}
+
+.darkCell {
+  background-color: #333 !important;
+}

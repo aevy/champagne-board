@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "outDir": "dist/",
+    "baseUrl": ".",
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "noUnusedParameters": true,
+    "noUnusedLocals": true,
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "es5",
+    "lib": ["es5", "dom", "es6"],
+    "jsx": "react",
+    "paths": {
+      "HOC/*": ["src/hocs/*"],
+      "Lib/*": ["src/lib/*"],
+      "Redux/*": ["src/redux/*"],
+      "Components/*": ["src/components/*"]
+    }
+  },
+  "include": ["./src/**/*", "./src/*", "../api/src/server.js"]
+}

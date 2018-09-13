@@ -1,0 +1,120 @@
+@blue: #2b64cc;
+
+.grid {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+}
+.cell {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  background-color: rgb(68, 68, 68);
+  border: 3px solid #222;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.cell.green {
+  background-color: #138013;
+  color: #89bf89;
+}
+
+.cell.blue {
+  background-color: @blue;
+}
+
+.cell.orange {
+  background-color: #ff9839;
+}
+
+.row {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: row;
+}
+
+.col {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  font-size: 2.4em;
+  align-items: center;
+  justify-content: center;
+  padding: 1em;
+}
+
+.loader {
+  display: flex;
+  flex: 1 1 0;
+}
+
+.loader img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.options {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  border-radius: 0.4em;
+  border: 1px solid #222;
+}
+
+.option {
+  display: flex;
+  padding: 0.6em;
+}
+
+.option:hover {
+  cursor: pointer;
+  background-color: darken(@blue, 15%);
+}
+
+.option.selected {
+  background-color: darken(@blue, 25%);
+  color: #fff;
+}
+
+.modalBackdrop {
+  background-color: rgba(0, 0, 0, 0.2);
+
+  height: 100%;
+  width: 100%;
+  z-index: 1000;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal {
+  padding: 1em;
+  display: flex;
+  border-radius: 0.4em;
+  flex-direction: column;
+  background-color: #fff;
+  opacity: 1;
+}
+
+.clickable:hover {
+  opacity: 0.6;
+  cursor: pointer;
+}
+.clickable:active {
+  opacity: 0.8;
+}
