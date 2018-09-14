@@ -35,6 +35,7 @@ export interface Goal {
   query: QueryBuilder;
   time: TimeQuery;
   value: number;
+  points?: number;
 }
 
 export interface Box {

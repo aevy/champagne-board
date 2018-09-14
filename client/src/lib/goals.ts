@@ -23,6 +23,10 @@ const goals: { [tag: string]: Goal } = {
   }
 };
 
+export const goalList: (Goal & { tag: string })[] = Object.keys(goals).map(
+  tag => ({ tag, ...goals[tag] })
+);
+
 export const isGoalFulilled = (queryCache: QueryCache, goal?: Goal) => {
   if (!goal) {
     return false;

@@ -9,6 +9,7 @@ const GOAL_POLL_INTERVAL = 5 * 1000;
 
 interface Props {
   goal: Goal;
+  disabled?: boolean;
 }
 
 interface LocalState {
@@ -34,11 +35,11 @@ class GoalItem extends React.PureComponent<Props & WithQueryCache, LocalState> {
   }
 
   render() {
-    const { queryCache, goal } = this.props;
+    const { queryCache, goal, disabled } = this.props;
     const currentValue = getLastCachedValues(goal.query, goal.time, queryCache)
       .map(value => value.toString())
       .valueOr("-");
-    const goalSatisfied = isGoalFulilled(queryCache, goal);
+    const goalSatisfied = !disabled && isGoalFulilled(queryCache, goal);
     return (
       <Cell green={goalSatisfied}>
         <Col>
