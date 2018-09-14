@@ -9,6 +9,7 @@ import Timeline from "./Timeline";
 import defaults from "./defaults";
 import YAxis, { YAxisTickType } from "Components/Timeline/YAxis";
 import Legend from "Components/Timeline/Legend";
+import classNames from "classnames";
 
 interface Props {
   timelionResults: TimelionResult[];
@@ -19,6 +20,7 @@ interface Props {
 }
 
 interface LocalState {
+  followTimeSeries: number;
   height: number;
   width: number;
   elem: HTMLElement;
@@ -58,8 +60,10 @@ class TimelineGraph extends React.Component<Props, LocalState> {
     (this as any).divRef = React.createRef();
     this.selectDataPoints = this.selectDataPoints.bind(this);
     this.clearDataPoints = this.clearDataPoints.bind(this);
+    this.setFollowTimeSeries = this.setFollowTimeSeries.bind(this);
 
     this.state = {
+      followTimeSeries: null,
       height: 0,
       width: 0,
       elem: null,
@@ -74,6 +78,15 @@ class TimelineGraph extends React.Component<Props, LocalState> {
     this.setState({ selectedDataPoints });
   }
 
+  setFollowTimeSeries(timeSeriesIndex: number) {
+    const { timelionResults } = this.props;
+    if (this.state.followTimeSeries === timeSeriesIndex) {
+      this.setState({ followTimeSeries: null });
+    } else if (timeSeriesIndex < timelionResults.length) {
+      this.setState({ followTimeSeries: timeSeriesIndex });
+    }
+  }
+
   clearDataPoints() {
     this.setState({ selectedDataPoints: [] });
   }
@@ -84,10 +97,20 @@ class TimelineGraph extends React.Component<Props, LocalState> {
     const width = !!elem ? elem.clientWidth : 0;
 
     const { timelionResults, margin, xTicks, yTicks } = this.props;
-    if (resultsAreEmpty(timelionResults)) {
+    const { followTimeSeries } = this.state;
+    if (!timelionResults) {
       return (
         <div ref={(this as any).divRef} className={css.chart}>
           <Loader />
+        </div>
+      );
+    }
+    if (resultsAreEmpty(timelionResults)) {
+      return (
+        <div
+          ref={(this as any).divRef}
+          className={classNames(css.chart, css.noData)}>
+          <span>No data found ¯\_(ツ)_/¯ </span>
         </div>
       );
     }
@@ -100,14 +123,16 @@ class TimelineGraph extends React.Component<Props, LocalState> {
     const yScale = scaleLinear()
       .domain([0, maxVal * defaults.Y_SCALE_MAX_FACTOR])
       .range([height - margin.bottom, margin.top]);
-
     const colorScheme = this.props.colorScheme || defaults.COLOR_SCHEME;
 
     const legends = _.map(timelionResults, (timelionResult, idx) => {
       const x = width - margin.right + defaults.LEGEND_OFFSET_X;
-      const y = margin.top + defaults.LEGEND_STEP_Y * idx;
+      const y =
+        margin.top + defaults.LEGEND_OFFSET_Y + defaults.LEGEND_STEP_Y * idx;
       return (
         <Legend
+          selected={idx === followTimeSeries}
+          onClick={() => this.setFollowTimeSeries(idx)}
           timelionResult={timelionResult}
           x={x}
           y={y}
@@ -118,13 +143,22 @@ class TimelineGraph extends React.Component<Props, LocalState> {
 
     const timelines = _.map(timelionResults, ({ data }, idx) => (
       <Timeline
+        selected={idx === followTimeSeries}
+        onClick={() => this.setFollowTimeSeries(idx)}
         timeSeries={data}
         xScale={xScale}
         yScale={yScale}
         stroke={colorScheme[idx]}
       />
     ));
-    const highlightDataPoints = _.chain(this.state.selectedDataPoints)
+
+    const timeSeriesIsSelected = followTimeSeries !== null;
+
+    const showDataPoints = timeSeriesIsSelected
+      ? timelionResults[followTimeSeries].data
+      : this.state.selectedDataPoints;
+
+    const highlightDataPoints = _.chain(showDataPoints)
       .filter(Boolean)
       .map(([timestamp, val], idx) => (
         <g
@@ -132,7 +166,7 @@ class TimelineGraph extends React.Component<Props, LocalState> {
           className={css.dataPoint}>
           <circle
             r={defaults.POINT_RADIUS}
-            fill={colorScheme[idx]}
+            fill={timeSeriesIsSelected ? "#fff" : colorScheme[idx]}
             cx={0}
             cy={0}
           />

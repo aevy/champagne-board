@@ -1,5 +1,13 @@
 import React from "react";
-import { Grid, Col, Row, Cell, Header, Modal } from "Components/Blocks";
+import {
+  Grid,
+  Col,
+  Row,
+  Cell,
+  Header,
+  Modal,
+  Subheader
+} from "Components/Blocks";
 import { deliveryUsers } from "Lib/users";
 import { User, TimeQuery, TimelionResult, TimeUnit } from "Lib/types";
 import Counter from "Components/Counter";
@@ -14,6 +22,8 @@ import { QueryCache } from "Redux/reducers/queryCache";
 import { getChachedValue } from "Lib/timelionCache";
 import QB from "Lib/queryBuilder";
 import QueryBuilder from "Lib/queryBuilder";
+import ChampagneList from "Components/ChampagneList";
+import { thisWeekDayInterval } from "Lib/timeQueries";
 
 const DEFAULT_QUERY = QB.create()
   .query({ story: "Delivery" })
@@ -40,7 +50,6 @@ const SUM_OF_HIRES_QUERY = QB.create()
 
 const deliveryUserTable = (
   user: User,
-  timeQuery: TimeQuery,
   selectChartQuery: (q: QueryBuilder, chartHeader: string) => void,
   pollFrequency: number
 ) => {
@@ -57,13 +66,13 @@ const deliveryUserTable = (
   return (
     <Col>
       <Cell onClick={() => selectChartQuery(statsForUser, user.name)}>
-        <Header>{user.name}</Header>
+        <Subheader>{user.name}</Subheader>
       </Cell>
       <Cell>
         <Header>
           <Counter
             query={presentsQuery}
-            timeQuery={timeQuery}
+            timeQuery={thisWeekDayInterval}
             interval={pollFrequency * 1000}
           />
         </Header>
@@ -72,7 +81,7 @@ const deliveryUserTable = (
         <Header>
           <Counter
             query={acceptsQuery}
-            timeQuery={timeQuery}
+            timeQuery={thisWeekDayInterval}
             interval={pollFrequency * 1000}
           />
         </Header>
@@ -136,7 +145,7 @@ class DeliveryBoard extends React.PureComponent<ViewProps, LocalState> {
   }
 
   componentDidUpdate(p: ViewProps, s: LocalState) {
-    const { selectedTimeQuery } = this.props;
+    const { selectedTimeQuery, timelionQuery } = this.props;
     const { chartQuery, chartCummulative } = this.state;
     const shouldRequery =
       JSON.stringify(p.selectedTimeQuery) !==
@@ -144,9 +153,9 @@ class DeliveryBoard extends React.PureComponent<ViewProps, LocalState> {
       chartQuery.build() !== s.chartQuery.build() ||
       chartCummulative !== s.chartCummulative;
     if (shouldRequery) {
-      p.timelionQuery(
-        s.chartQuery.cummulative(s.chartCummulative),
-        p.selectedTimeQuery,
+      timelionQuery(
+        chartQuery.cummulative(chartCummulative),
+        selectedTimeQuery,
         0
       );
     }
@@ -189,7 +198,7 @@ class DeliveryBoard extends React.PureComponent<ViewProps, LocalState> {
       chartQuery.cummulative(chartCummulative),
       selectedTimeQuery,
       queryCache
-    ).valueOr([]);
+    ).valueOr(null);
     return (
       <Grid>
         <Row>
@@ -197,10 +206,7 @@ class DeliveryBoard extends React.PureComponent<ViewProps, LocalState> {
             <Row>
               <Col>
                 <Cell blue>
-                  <span>Delivery</span>
-                  <span className={css.clickable} onClick={this.openModal}>
-                    {selectedDateRange.label}
-                  </span>
+                  <Subheader>Delivery</Subheader>
                   <Modal isOpen={modalIsOpen} close={this.closeModal}>
                     <TimeQuerySelector
                       pollFrequency={pollFrequency}
@@ -222,41 +228,43 @@ class DeliveryBoard extends React.PureComponent<ViewProps, LocalState> {
                       "Presentations by user"
                     )
                   }>
-                  <Header>Presents</Header>
+                  <Subheader>Presents</Subheader>
                 </Cell>
                 <Cell
                   onClick={() =>
                     this.setChartQuery(ALL_ACCEPTS_QUERY, "Accepts by user")
                   }>
-                  <Header>Accepts</Header>
+                  <Subheader>Accepts</Subheader>
                 </Cell>
               </Col>
               {deliveryUsers.map(user =>
-                deliveryUserTable(
-                  user,
-                  selectedTimeQuery,
-                  this.setChartQuery,
-                  pollFrequency
-                )
+                deliveryUserTable(user, this.setChartQuery, pollFrequency)
               )}
               <Col>
                 <Cell
                   onClick={() =>
                     this.setChartQuery(DEFAULT_QUERY, "All delivery")
                   }>
-                  <Header>Total</Header>
+                  <Subheader>Total</Subheader>
                 </Cell>
                 <GoalItem
-                  goal={{ ...goals.weeklyPresents, time: selectedTimeQuery }}
+                  disabled={
+                    selectedDateRange.mode !== "quick" ||
+                    selectedDateRange.type !== "week"
+                  }
+                  goal={goals.weeklyPresents}
                 />
-                <GoalItem
-                  goal={{ ...goals.weeklyAccepts, time: selectedTimeQuery }}
-                />
+                <GoalItem goal={goals.weeklyAccepts} />
               </Col>
             </Row>
             <Row>
               <Cell className={css.darkCell}>
-                <Header>{chartHeader}</Header>
+                <Header>
+                  {chartHeader}{" "}
+                  <span onClick={this.openModal} className={css.clickable}>
+                    ⚙
+                  </span>
+                </Header>
                 <TimelineGraph
                   timelionResults={timelionResults}
                   xTicks={selectedDateInterval}
@@ -267,9 +275,7 @@ class DeliveryBoard extends React.PureComponent<ViewProps, LocalState> {
             </Row>
           </Col>
           <Col flex={2}>
-            <Col>
-              <Cell orange>CP</Cell>
-            </Col>
+            <ChampagneList />
             <Col>
               <Cell
                 blue
@@ -280,7 +286,7 @@ class DeliveryBoard extends React.PureComponent<ViewProps, LocalState> {
                 <Header>
                   <Counter
                     query={NO_OF_HIRES_QUERY}
-                    timeQuery={selectedTimeQuery}
+                    timeQuery={thisWeekDayInterval}
                     interval={pollFrequency * 1000}
                   />
                 </Header>
@@ -294,7 +300,7 @@ class DeliveryBoard extends React.PureComponent<ViewProps, LocalState> {
                 <Header>
                   <Counter
                     query={SUM_OF_HIRES_QUERY}
-                    timeQuery={selectedTimeQuery}
+                    timeQuery={thisWeekDayInterval}
                     interval={pollFrequency * 1000}
                   />
                   USD

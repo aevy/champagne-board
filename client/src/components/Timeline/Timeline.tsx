@@ -3,8 +3,11 @@ import { TimeSeries } from "Lib/types";
 import { ScaleTime, ScaleLinear } from "d3-scale";
 import defaults from "./defaults";
 import css from "./styles.less";
+import classNames from "classnames";
 
 interface Props {
+  selected: boolean;
+  onClick: () => void;
   timeSeries: TimeSeries;
   xScale: ScaleTime<number, number>;
   yScale: ScaleLinear<number, number>;
@@ -12,6 +15,8 @@ interface Props {
 }
 
 const Timeline: React.StatelessComponent<Props> = ({
+  selected,
+  onClick,
   timeSeries,
   xScale,
   stroke,
@@ -26,8 +31,9 @@ const Timeline: React.StatelessComponent<Props> = ({
     .join(" ");
   return (
     <path
+      onClick={onClick}
       d={pathString}
-      className={css.timeLine}
+      className={classNames(css.timeLine, { [css.selected]: selected })}
       stroke={stroke || defaults.STROKE_COLOR}
     />
   );
