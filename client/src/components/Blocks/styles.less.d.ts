@@ -13,3 +13,4 @@ export const selected: string;
 export const modal: string;
 export const modalBackdrop: string;
 export const clickable: string;
+export const subheader: string;

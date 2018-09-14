@@ -7,3 +7,4 @@ export { default as Loader } from "./Loader";
 export { default as OptionSelector } from "./OptionSelector";
 export { default as Modal } from "./Modal";
 export { default as NumberInput } from "./NumberInput";
+export { default as Subheader } from "./Subheader";
