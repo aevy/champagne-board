@@ -8,7 +8,7 @@ const convertToUSD = (currency, amount) =>
       const usdRate = body.rates.USD;
       const xchangeRate = body.rates[currency];
       if (!xchangeRate) {
-        res.status(400).send("currency not found");
+        throw "Weird currency";
         return;
       }
       const amountInUsd = Math.floor((amount * usdRate) / xchangeRate);
