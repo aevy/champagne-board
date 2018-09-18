@@ -9,8 +9,9 @@ const userMiddleware = (req, res, next) => {
   req.userName = userNames[user_id];
   if (!req.userName) {
     res.status(400).send("Couldn't recognize user");
+  } else {
+    next();
   }
-  next();
 };
 
 const reportAfterware = (req, res) => {

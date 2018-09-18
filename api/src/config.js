@@ -15,6 +15,7 @@ module.exports = {
     U3V0H9NLA: "Love",
     UAK4HEXFW: "Sofia",
     UB9BP16UX: "TJ",
+    U5AUHCR2B: "Tobias",
     UB292NRFH: "James",
     U0362PZ56: "Strömmis"
   },
@@ -23,7 +24,6 @@ module.exports = {
       U025LF8BP: "U025LF8BP",
       U15G19DGE: "U15G19DGE",
       U3V0H9NLA: "U3V0H9NLA"
-
     }
   }
 };
