@@ -1,0 +1,16 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: debian:stretch
+    steps:
+      - checkout
+      - run:
+          name: Building images
+          command: make build
+      - run:
+          name: Starting containers
+          command: make up
+      - run:
+          name: Deploying
+          command: make deploy
