@@ -1,6 +1,7 @@
 const buildQueryFromObj = (obj: any, connect = "AND") => {
   const keys = Object.keys(obj);
   const str: string = keys
+    .sort()
     .map(k => {
       if (k === "OR") {
         return `(${buildQueryFromObj(obj[k], "OR")})`;

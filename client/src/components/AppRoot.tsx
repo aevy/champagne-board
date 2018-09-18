@@ -4,7 +4,7 @@ import { History } from "history";
 import createHistory from "history/createBrowserHistory";
 import { Provider } from "react-redux";
 import store from "Redux/store";
-import DeliveryBoard from "Components/Boards/DeliveryBoard";
+import Boards from "Components/Boards/Boards";
 
 class AppRoot extends React.PureComponent<{}, {}> {
   history: History;
@@ -19,7 +19,7 @@ class AppRoot extends React.PureComponent<{}, {}> {
       <Provider store={store}>
         <Router>
           <div style={{ height: "100%" }}>
-            <DeliveryBoard />
+            <Boards />
           </div>
         </Router>
       </Provider>

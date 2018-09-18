@@ -3,8 +3,16 @@ import { QueryCache } from "Redux/reducers/queryCache";
 import { Maybe } from "tsmonad";
 import QueryBuilder from "Lib/queryBuilder";
 
-export const getCacheKey = (query: QueryBuilder, time: TimeQuery) =>
-  `${query.build()}@@${JSON.stringify(time)}`;
+export const getCacheKey = (query: QueryBuilder, time: TimeQuery) => {
+  const timeString = [
+    time.from,
+    time.to,
+    time.interval,
+    time.mode,
+    time.timezone
+  ].join("$");
+  return `${query.build()}@@${timeString}`;
+};
 
 export const getChachedValue = (
   query: QueryBuilder,

@@ -1,4 +1,4 @@
-import { thisWeekDayInterval } from "Lib/timeQueries";
+import { thisWeekDayInterval, thisMonthDayInterval } from "Lib/timeQueries";
 import { Goal } from "Lib/types";
 import { QueryCache } from "Redux/reducers/queryCache";
 import { getLastCachedValues } from "Lib/timelionCache";
@@ -8,7 +8,7 @@ const goals: { [tag: string]: Goal } = {
   weeklyAccepts: {
     label: "Accepts this week",
     query: QB.create()
-      .query({ action: "accepted" })
+      .query({ action: "Accepted" })
       .cummulative(),
     time: thisWeekDayInterval,
     value: 20
@@ -16,10 +16,58 @@ const goals: { [tag: string]: Goal } = {
   weeklyPresents: {
     label: "Presentations this week",
     query: QB.create()
-      .query({ action: "presented" })
+      .query({ action: "Presented" })
       .cummulative(),
     time: thisWeekDayInterval,
     value: 30
+  },
+  weeklyMeetings: {
+    label: "Qualified meetings this week",
+    query: QB.create()
+      .query({ action: "Meeting" })
+      .cummulative(),
+    time: thisWeekDayInterval,
+    value: 9
+  },
+  weeklyNewCases: {
+    label: "New cases this week",
+    query: QB.create()
+      .query({ action: "NewCase" })
+      .cummulative(),
+    time: thisWeekDayInterval,
+    value: 5
+  },
+  weeklySignedContracts: {
+    label: "Signed contracts this week",
+    query: QB.create()
+      .query({ action: "SignedContract" })
+      .cummulative(),
+    time: thisWeekDayInterval,
+    value: 10
+  },
+  weeklySentContracts: {
+    label: "Sent contracts this week",
+    query: QB.create()
+      .query({ action: "SentContract" })
+      .cummulative(),
+    time: thisWeekDayInterval,
+    value: 10
+  },
+  monthlyHires: {
+    label: "Made 3 hires this month",
+    query: QB.create()
+      .query({ action: "hire" })
+      .cummulative(),
+    time: thisMonthDayInterval,
+    value: 3
+  },
+  weeklyHire: {
+    label: "Made a hire this week",
+    query: QB.create()
+      .query({ action: "hire" })
+      .cummulative(),
+    time: thisWeekDayInterval,
+    value: 1
   }
 };
 

@@ -152,7 +152,8 @@ class TimelineGraph extends React.Component<Props, LocalState> {
       />
     ));
 
-    const timeSeriesIsSelected = followTimeSeries !== null;
+    const timeSeriesIsSelected =
+      followTimeSeries !== null && !!timelionResults[followTimeSeries];
 
     const showDataPoints = timeSeriesIsSelected
       ? timelionResults[followTimeSeries].data

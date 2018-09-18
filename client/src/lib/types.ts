@@ -51,3 +51,10 @@ export interface Option<T> {
 }
 
 export type TimeUnit = "day" | "week" | "month" | "year";
+
+export interface ActionQuery {
+  action: "string";
+  label: "string";
+  shortLabel: "string";
+  goal: Goal;
+}

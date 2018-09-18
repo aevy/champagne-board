@@ -23,3 +23,8 @@ export const userList = _.values(userMap);
 
 export const deliveryUsers = userList.filter(u => u.delivery);
 export const salesUsers = userList.filter(u => u.sales);
+
+export const getUsersForDomain = (domain: string) => {
+  const domUncased = domain.toLowerCase();
+  return userList.filter(u => (u as any)[domUncased]);
+};
