@@ -26,6 +26,7 @@ const reportAfterware = (req, res) => {
 router.use(userMiddleware);
 
 router.post("/hire", (req, res, next) => {
+  console.log("BODY", req.body);
   const { text } = req.body;
   const [amountString, mCurrency] = text.split(" ");
   const currency = (mCurrency && mCurrency.toUpperCase()) || "USD";
