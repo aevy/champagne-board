@@ -20,7 +20,7 @@ const reportAfterware = (req, res) => {
     userId: req.userId,
     ...req.report
   });
-  //res.send("OK");
+  res.send("OK");
 };
 
 router.use(userMiddleware);
