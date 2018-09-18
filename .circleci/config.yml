@@ -13,6 +13,6 @@ jobs:
       - run:
           name: Starting containers
           command: make up
-      - run:
+      - deploy:
           name: Deploying
           command: make deploy
