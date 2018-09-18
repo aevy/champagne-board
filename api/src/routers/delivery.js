@@ -3,16 +3,8 @@ const { rails, userNames } = require("../config");
 const { sendTo } = require("../lib/udp");
 
 const userMiddleware = (req, res, next) => {
-  const userId = rails.users[req.body.user_id];
-  if (!userId) {
-    res.status(400).send("User not found");
-    return;
-  }
+  const userId = rails.users[req.body.user_id] || rails.users.__UNKNOWN__;
   const userName = userNames[userId];
-  if (!userName) {
-    res.status(400).send("Username not found");
-    return;
-  }
 
   req.personId = req.body.person_id;
   req.positionId = req.body.list_id;

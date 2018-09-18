@@ -20,11 +20,11 @@ module.exports = {
     U7XLLUX1U: "Kristina",
     U53DU5SD7: "Valerie",
     U0362PZ56: "Strömmis",
-    "---------": "Someone"
+    "__UNKNOWN__": "Someone"
   },
   rails: {
     users: {
-      "d06d06ca-a8be-4b75-b181-1bdf38b5ec49": "---------",
+      "__UNKNOWN__": "__UNKNOWN__",
       "5f822278-74b2-478d-97fe-826029c38382": "U3V0H9NLA",
       "07555e08-4f7b-4b50-81d6-ad6c2f4906ba": "U3V0H9NLA",
       "db717848-90b4-47ab-83eb-de557d26d807": "U3V0H9NLA",
