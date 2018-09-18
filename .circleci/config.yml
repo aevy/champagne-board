@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: jockee/circlebase:latest
+      - image: ubuntu:xenial
     steps:
       - setup_remote_docker:
           reusable: true
@@ -15,4 +15,6 @@ jobs:
           command: make up
       - deploy:
           name: Deploying
-          command: make deploy
+          command: |
+            printf '%s\n    %s\n' 'Host *' 'StrictHostKeyChecking no' >> ~/.ssh/config
+            make deploy
