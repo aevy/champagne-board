@@ -4,6 +4,8 @@ jobs:
     docker:
       - image: jockee/circlebase:latest
     steps:
+      - setup_remote_docker:
+          reusable: true
       - checkout
       - run:
           name: Building images
