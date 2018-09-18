@@ -9,7 +9,8 @@ const HOST = "0.0.0.0";
 // App
 const app = express();
 
-app.use(bodyParser.json());
+app.use("/api", bodyParser.json());
+app.use("/api/slack", bodyParser.urlencoded({ extended: false }));
 
 app.use("/api", router);
 
