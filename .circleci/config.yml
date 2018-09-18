@@ -9,7 +9,7 @@ jobs:
       - checkout
       - run:
           name: Building images
-          command: make build
+          command: make build-prod
       - run:
           name: Starting containers
           command: make up
