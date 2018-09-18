@@ -20,7 +20,7 @@ const reportAfterware = (req, res) => {
     userId: req.userId,
     ...req.report
   });
-  res.send("OK");
+  //res.send("OK");
 };
 
 router.use(userMiddleware);
@@ -38,7 +38,7 @@ router.post("/hire", (req, res, next) => {
   if (currency !== "USD") {
     convertToUSD(currency, amount).then(amountInUsd => {
       req.report = { action: "Hire", payload: { amount: amountInUsd } };
-      console.log(req.report.payload)
+      console.log(req.report.payload);
       next();
     });
   } else {
