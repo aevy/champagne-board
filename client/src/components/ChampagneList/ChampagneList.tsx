@@ -7,7 +7,7 @@ import QueryBuilder from "Lib/queryBuilder";
 import { goalList, isGoalFulilled } from "Lib/goals";
 import _ from "lodash";
 
-const MAX_CHAMPAGNE_POINTS = 6;
+const MAX_CHAMPAGNE_POINTS = 5;
 
 interface Props {
   queryCache: QueryCache;
