@@ -121,7 +121,7 @@ class Board extends React.PureComponent<ViewProps, LocalState> {
       pollFrequency: 30,
       chartHeader: props.domain,
       modalIsOpen: false,
-      chartCummulative: true,
+      chartCummulative: false,
       chartQuery: this.getDefaultQuery()
     };
   }

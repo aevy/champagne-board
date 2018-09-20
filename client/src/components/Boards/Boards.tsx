@@ -65,7 +65,7 @@ class Boards extends React.PureComponent<Props, LocalState> {
     this.toggleAutoplay = this.toggleAutoplay.bind(this);
     this.getDomain = this.getDomain.bind(this);
     (this as any).state = {
-      autoplay: false,
+      autoplay: true,
       domainIndex: 0
     };
   }
