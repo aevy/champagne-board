@@ -11,7 +11,7 @@ const users: Record<string, Partial<User>> = {
   U3V0H9NLA: { name: "Love", delivery: true },
   UAK4HEXFW: { name: "Sofia", sales: true },
   UB9BP16UX: { name: "TJ", delivery: true },
-  UB292NRFH: { name: "James" },
+  UB292NRFH: { name: "James", sales: true },
   U0362PZ56: { name: "Strömmis" }
 };
 
